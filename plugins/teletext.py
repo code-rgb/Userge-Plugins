@@ -8,7 +8,6 @@ import time
 
 @userge.on_cmd("tg", about={'header': "For Posting Text on Telegraph",
   'usage': "{tr}tg Title [reply to text]"})
-
 async def tele_text(message: Message):
     """Paste on Telegra.ph"""
     start = time.time()
@@ -23,10 +22,7 @@ async def tele_text(message: Message):
     t = TelegraphPoster(use_api=True)
     t.create_api_token('USERGE-X')
     user = await userge.get_me()
-    if user.username:
-        user_n = f"@{user.username}"
-    else:
-        user_n = user.first_name
+    user_n = f"@{user.username}" if user.username else user.first_name
     text = replied.text
     title = message.input_str
     if not title:

@@ -29,10 +29,7 @@ async def honka_says_bot(message: Message):
     await message.delete()
     if '-l' in message.flags:
         font_size = 2
-    if '-m' in message.flags:
-        font_size = 1
-    else:
-        font_size = 0
+    font_size = 1 if '-m' in message.flags else 0
     try:
         stickers = await userge.get_inline_bot_results(
             "honka_says_bot",

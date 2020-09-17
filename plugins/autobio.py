@@ -63,9 +63,6 @@ async def autobio_worker(msg: Message, bio_quotes: list):
     quotes = bio_quotes
     while BIO_UPDATION:
         for k in range(30):
-            if not BIO_UPDATION:
-                break
-
             try:
                 await msg.client.update_profile(bio=quotes[k])
 

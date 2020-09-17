@@ -22,10 +22,7 @@ async def ph_comment(message: Message):
     """ Create P*rnhub Comment for Replied User """
     replied = message.reply_to_message
     if replied:
-        if replied.forward_from:
-            user = replied.forward_from
-        else:
-            user = replied.from_user
+        user = replied.forward_from if replied.forward_from else replied.from_user
         if "," in message.input_str:
             u_name, msg_text = message.input_str.split(',', 1)
             name = u_name.strip()

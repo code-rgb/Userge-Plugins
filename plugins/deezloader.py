@@ -52,10 +52,7 @@ async def deezload(message: Message):
         return
 
     flags = list(message.flags)
-    if '-zip' not in flags:
-        to_zip = False
-    else:
-        to_zip = True
+    to_zip = '-zip' in flags
     d_quality = "MP3_320"
     if not message.filtered_input_str:
         await message.edit("Olá Peru Master🙂, Tell me how to download `Nothing`")
@@ -74,7 +71,7 @@ async def deezload(message: Message):
         if not re.search(rex, input_link):
             await message.edit("As per my Blek Mejik Regex, this link is not supported.")
             return
-    elif '-dsong' in flags:
+    else:
         try:
             artist, song, quality = input_.split('-')
         except ValueError:
@@ -85,16 +82,15 @@ async def deezload(message: Message):
                 await message.edit("🙂K!!")
                 return
     try:
-        if '-sdl' in flags:
-            if 'track/' in input_link:
-                await proper_trackdl(input_link, quality, message, loader, TEMP_PATH)
-            elif 'album/' or 'playlist/' in input_link:
-                await batch_dl(input_link, quality, message, loader, TEMP_PATH, to_zip)
-        elif '-ddl' in flags:
-            if 'track/' in input_link:
-                await proper_trackdl(input_link, quality, message, loader, TEMP_PATH)
-            elif 'album/' or 'playlist/' in input_link:
-                await batch_dl(input_link, quality, message, loader, TEMP_PATH, to_zip)
+        if (
+            '-sdl' in flags
+            and 'track/' in input_link
+            or '-ddl' in flags
+            and 'track/' in input_link
+        ):
+            await proper_trackdl(input_link, quality, message, loader, TEMP_PATH)
+        elif '-sdl' in flags or '-ddl' in flags:
+            await batch_dl(input_link, quality, message, loader, TEMP_PATH, to_zip)
     except NoDataApi as nd:
         await message.edit("No Data is available for input link")
         await Clogger.log(f"#ERROR\n\n{nd}")

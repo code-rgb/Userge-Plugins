@@ -37,12 +37,12 @@ async def transform(message: Message):
 async def transform_media(image_path, transform_choice):
     im = Image.open(image_path)
     os.remove(image_path)
-    if not im.mode == 'RGB':
-       im = im.convert('RGB')
-    if transform_choice == "invert":
-        out = ImageOps.invert(im)
-    elif transform_choice == "flip":    
+    if im.mode != 'RGB':
+        im = im.convert('RGB')
+    if transform_choice == "flip":
         out = ImageOps.flip(im)
+    elif transform_choice == "invert":
+        out = ImageOps.invert(im)
     else:
         out = im.transpose(Image.FLIP_LEFT_RIGHT)
     image_name = "invert.webp"
@@ -88,8 +88,8 @@ async def rotate_(message: Message):
 async def rotate_media(image_path, args):
     im = Image.open(image_path)
     os.remove(image_path)
-    if not im.mode == 'RGB':
-       im = im.convert('RGB')
+    if im.mode != 'RGB':
+        im = im.convert('RGB')
     angle = args
     out = im.rotate(angle, expand=True)
     image_name = "rotated.webp"

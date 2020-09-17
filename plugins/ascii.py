@@ -27,10 +27,7 @@ async def ascii_(message: Message):
         await message.edit("```Reply To Message Dummy```")
         await message.reply_sticker('CAADAQADhgADwKwII4f61VT65CNGFgQ')
         return
-    if '-alt' in message.flags:
-        ascii_type = "alt"
-    else:
-        ascii_type = ""
+    ascii_type = "alt" if '-alt' in message.flags else ""
     dls_loc = await media_to_image(message)
     if not dls_loc:
         return
@@ -56,8 +53,8 @@ def asciiart(in_f, SC, GCF, color1, color2, bgcolor, ascii_type):
     letter_height = font.getsize("x")[1]
     WCF = letter_height / letter_width
     img = Image.open(in_f)
-    if not img.mode == 'RGB':
-       img = img.convert('RGB')
+    if img.mode != 'RGB':
+        img = img.convert('RGB')
     if ascii_type == "alt":
         img = ImageOps.invert(img)
     widthByLetter = round(img.size[0] * SC * WCF)
@@ -76,10 +73,8 @@ def asciiart(in_f, SC, GCF, color1, color2, bgcolor, ascii_type):
     draw = ImageDraw.Draw(newImg)
     leftpadding = 0
     y = 0
-    lineIdx = 0
-    for line in lines:
+    for lineIdx, line in enumerate(lines):
         color = colorRange[lineIdx]
-        lineIdx += 1
         draw.text((leftpadding, y), line, color.hex, font=font)
         y += letter_height
     image_name = "ascii.png"
@@ -90,6 +85,5 @@ def asciiart(in_f, SC, GCF, color1, color2, bgcolor, ascii_type):
 
 def random_color():
     number_of_colors = 2
-    color = ['#' + ''.join([random.choice('0123456789ABCDEF') for j in
+    return ['#' + ''.join([random.choice('0123456789ABCDEF') for j in
              range(6)]) for i in range(number_of_colors)]
-    return color

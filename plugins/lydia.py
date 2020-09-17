@@ -206,52 +206,53 @@ async def lydia_queue() -> None:
 # saved in a channel and reply it to message.
 # Idea arised from here (https://t.me/usergeot/157629) thnx 👍
 async def _custom_media_reply(message: Message):
-    if CUSTOM_REPLIES_IDS:
-        await asyncio.sleep(1)
-        cus_msg = int(random.choice(CUSTOM_REPLIES_IDS))
-        cus_msg = await message.client.get_messages(chat_id=CUSTOM_REPLY_CHANNEL,
-                                                    message_ids=cus_msg)
-        if cus_msg.service:
+    if not CUSTOM_REPLIES_IDS:
+        return
+    await asyncio.sleep(1)
+    cus_msg = int(random.choice(CUSTOM_REPLIES_IDS))
+    cus_msg = await message.client.get_messages(chat_id=CUSTOM_REPLY_CHANNEL,
+                                                message_ids=cus_msg)
+    if cus_msg.service:
+        await _custom_media_reply(message)
+        return
+    if cus_msg.media:
+        file_id, file_ref = get_file_id_and_ref(cus_msg)
+        try:
+            if cus_msg.animation:
+                await message.client.send_animation(
+                    chat_id=message.chat.id,
+                    animation=file_id,
+                    file_ref=file_ref,
+                    unsave=True,
+                    reply_to_message_id=message.message_id
+                )
+            else:
+                action = None
+                if cus_msg.audio:
+                    action = "upload_audio"
+                elif cus_msg.document:
+                    action = "upload_document"
+                elif cus_msg.photo:
+                    action = "upload_photo"
+                elif cus_msg.video:
+                    action = "upload_audio"
+                elif cus_msg.voice:
+                    action = "record_audio"
+                elif cus_msg.video_note:
+                    action = "upload_video_note"
+                if action:
+                    await message.reply_chat_action(action)
+                await asyncio.sleep(5)
+                await message.reply_cached_media(
+                    file_id=file_id,
+                    file_ref=file_ref
+                )
+        except Exception as idk:  # pylint: disable=W0703
+            LOGGER.log(f"#ERROR: `{idk}`")
             await _custom_media_reply(message)
             return
-        if cus_msg.media:
-            file_id, file_ref = get_file_id_and_ref(cus_msg)
-            try:
-                if cus_msg.animation:
-                    await message.client.send_animation(
-                        chat_id=message.chat.id,
-                        animation=file_id,
-                        file_ref=file_ref,
-                        unsave=True,
-                        reply_to_message_id=message.message_id
-                    )
-                else:
-                    action = None
-                    if cus_msg.audio:
-                        action = "upload_audio"
-                    elif cus_msg.document:
-                        action = "upload_document"
-                    elif cus_msg.photo:
-                        action = "upload_photo"
-                    elif cus_msg.video:
-                        action = "upload_audio"
-                    elif cus_msg.voice:
-                        action = "record_audio"
-                    elif cus_msg.video_note:
-                        action = "upload_video_note"
-                    if action:
-                        await message.reply_chat_action(action)
-                    await asyncio.sleep(5)
-                    await message.reply_cached_media(
-                        file_id=file_id,
-                        file_ref=file_ref
-                    )
-            except Exception as idk:  # pylint: disable=W0703
-                LOGGER.log(f"#ERROR: `{idk}`")
-                await _custom_media_reply(message)
-                return
-        if cus_msg.text:
-            await _send_text_like_a_human(message, cus_msg.text)
+    if cus_msg.text:
+        await _send_text_like_a_human(message, cus_msg.text)
 
 
 async def _send_text_like_a_human(message: Message, text: str) -> None:

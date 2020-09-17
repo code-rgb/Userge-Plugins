@@ -185,8 +185,8 @@ async def _init():
 
 async def return_json_senpai(query, vars_):
     """ Makes a Post to https://graphql.anilist.co. """
-    url_ = "https://graphql.anilist.co"
     async with ClientSession() as api_:
+        url_ = "https://graphql.anilist.co"
         post_con = await api_.post(url_, json={'query': query, 'variables': vars_})
         json_data = await post_con.json()
         return json_data
