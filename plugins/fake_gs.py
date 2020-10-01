@@ -26,7 +26,7 @@ async def FakeGoogleSearch(message: Message):
       
     await message.delete()
     await asyncio.sleep(2)
-    img='https://i.imgur.com/wNFr5X2.jpg'
+    img='https://imgur.com/download/ShaVox7/fgs'
     r=download(img)
     photo=Image.open(r)
     drawing=ImageDraw.Draw(photo)
