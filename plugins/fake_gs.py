@@ -24,7 +24,7 @@ async def FakeGoogleSearch(message: Message):
     else: 
         return await message.err("Invalid Input! Check help for more info!", del_in=5)
       
-    await message.edit('Connecting to `https://www.google.com/` ...')
+    await message.delete()
     await asyncio.sleep(2)
     img='https://i.imgur.com/wNFr5X2.jpg'
     r=download(img)
@@ -33,12 +33,11 @@ async def FakeGoogleSearch(message: Message):
     blue=(0,0,255)
     black=(0,0,0)
     font1=ImageFont.truetype("resources/ProductSans-BoldItalic.ttf",20)
-    font2=ImageFont.truetype("resources/ProductSans-Light.ttf",23)
+    font2=ImageFont.truetype("resources/ProductSans-Regular.ttf",23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
     photo.save("downloads/test.jpg")
     reply = message.reply_to_message
-    await message.delete()
     reply_id = reply.message_id if reply else None
     await message.client.send_photo(
         message.chat.id,
