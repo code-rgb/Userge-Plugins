@@ -1,5 +1,4 @@
 """Find Songs Fast"""
-# Made by- @DeletedUser420 idea- @AnInnocentboy
 
 
 from pyrogram.errors import BadRequest
