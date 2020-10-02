@@ -3,7 +3,7 @@
 """ PEPEify via @honka_says_bot """
 
 from userge import userge, Message
-from userge.utils import deEmojify
+from userge.utils import demojify
 
 @userge.on_cmd("honk", about={
     'header': "Creates PEPE sticker",
