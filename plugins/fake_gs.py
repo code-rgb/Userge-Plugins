@@ -43,4 +43,4 @@ async def FakeGoogleSearch(message: Message):
         message.chat.id,
         'downloads/test.jpg',
         reply_to_message_id=reply_id)
-    os.remove('downloads/test.jpg')
+    os.remove('Downloads/test.jpg')
