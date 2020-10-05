@@ -36,11 +36,11 @@ async def FakeGoogleSearch(message: Message):
     font2=ImageFont.truetype("resources/ProductSans-Light.ttf",23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
-    photo.save("Downloads/test.jpg")
+    photo.save("downloads/test.jpg")
     reply = message.reply_to_message
     reply_id = reply.message_id if reply else None
     await message.client.send_photo(
         message.chat.id,
         'downloads/test.jpg',
         reply_to_message_id=reply_id)
-    os.remove('Downloads/test.jpg')
+    os.remove('downloads/test.jpg')
