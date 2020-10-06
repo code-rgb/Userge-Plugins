@@ -289,7 +289,8 @@ async def celeb_(msg: Message):
         "android" : "Android",
         "twitter" : "Twitter",
         "ht" : "htTweets",
-        "zee" : "ZeeNews"
+        "zee" : "ZeeNews",
+        "ncb" : "narcoticsbureau"
     }
 
     replied = msg.reply_to_message
