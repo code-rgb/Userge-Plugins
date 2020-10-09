@@ -20,7 +20,7 @@ async def call_func(message):
         "```Me: Hello Sir, Please Ban This Telegram Account.```",
         "```Pavel Durov : May I Know Who Is This?```",
         f"```Me: Yo Brah, I Am` {DEFAULTUSER} ```",
-        "```Pavel Durov : OMG!!! Long time no see, Wassup cat...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.```",
+        f"```Pavel Durov : OMG!!! Long time no see, Wassup` {DEFAULTUSER}`...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.```",
         "```Me: Thanks, See You Later Brah.```",
         "```Pavel Durov : Please Don't Thank Brah, Telegram Is Our's. Just Gimme A Call When You Become Free.```",
         "```Me: Is There Any Issue/Emergency???```",
