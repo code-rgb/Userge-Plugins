@@ -28,7 +28,7 @@ async def lamos_(message: Message):
 @userge.on_cmd("nothappy$", about={'header': "Mood Swing"})
 async def Moods_(message: Message):
     """Mood Swing"""
-    deq = deque(list("😁☹️😁☹️😁☹️😁"))
+    deq = deque(list("😁☹️😁☹️😁☹️"))
     for _ in range(48):
         await asyncio.sleep(0.4)
         await message.edit("".join(deq))
@@ -86,10 +86,52 @@ async def smoon_(message: Message):
             await asyncio.sleep(animation_interval)
             await message.edit(animation_chars[i % 8])
             
+@userge.on_cmd("theart$", about={'header': "Another kensar heart animation"})
+async def theart_(message: Message):
+    """theart"""
+    animation_interval = 0.4
+    animation_ttl = range(117)
+    await message.edit("theart")
+    animation_chars = [
+
+            "❤️",
+            "🧡",    
+            "💛",
+            "💚",
+            "💙",
+            "💜",
+            "🖤",
+            "❤️",
+            "🧡",    
+            "💛",
+            "💚",
+            "💙",
+            "💜",
+            "🖤",
+            "❤️",
+            "🧡",    
+            "💛",
+            "💚",
+            "💙",
+            "💜",
+            "🖤",
+            "❤️",
+            "🧡",    
+            "💛",
+            "💚",
+            "💙",
+            "💜",
+            "🖤"
+        ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await message.edit(animation_chars[i % 28])
+		
+		
 @userge.on_cmd("tmoon$", about={'header': "Another kensar moon animation"})
 async def tmoon_(message: Message):
     """tmoon"""
-    animation_interval = 0.1
+    animation_interval = 0.4
     animation_ttl = range(117)
     await message.edit("tmoon")
     animation_chars = [
