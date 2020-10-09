@@ -71,7 +71,7 @@ async def gym_(message: Message):
 async def smoon_(message: Message):
     """smoon"""
     animation_interval = 0.1
-    animation_ttl = range(101)
+    animation_ttl = range(50)
     await message.edit("smoon..")
     animation_chars = [
 
