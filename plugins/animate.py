@@ -1,3 +1,5 @@
+#Taken from USERGE_X and few modifications done by Bhoomi
+
 """Spammy Animations ☠️"""
 import re, asyncio
 from collections import deque
