@@ -31,6 +31,6 @@ async def call_func(message):
     called = (f"**Private Call Disconnected.**\n\n```BY``` {DEFAULTUSER}``` ")
     max_ani = len(animation_chars)
     for i in range(max_ani):
-        await asyncio.sleep(3)
+        await asyncio.sleep(4)
         await message.edit(animation_chars[i % max_ani])
     await message.edit(called)
