@@ -13,7 +13,7 @@ async def call_func(message):
         "```Call Connected.```",
         "```Telegram: Hello This is Telegram HQ. Who is this?```",
         "```Connection Established ```",
-        "```Me: Yo this is```` {DEFAULTUSER}``` ,```Please Connect me to my lil bro,Pavel Durov```",
+        "```Me: Yo this is``` {DEFAULTUSER}``` ,```Please Connect me to my lil bro,Pavel Durov```",
         "```User Authorised.```",
         "```Calling Pavel Durov `  `At +916969696969```",
         "```Private  Call Connected...```",
