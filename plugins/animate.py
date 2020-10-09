@@ -177,8 +177,8 @@ async def tmoon_(message: Message):
 async def thinking_(message: Message):
     """thinking"""
     animation_interval = 0.1
-    animation_ttl = range(144)
-    await message.edit("tmoon")
+    animation_ttl = range(72)
+    await message.edit("thinking")
     animation_chars = [
 
 	"THINKING",
