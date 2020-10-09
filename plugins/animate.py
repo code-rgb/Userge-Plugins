@@ -172,3 +172,52 @@ async def tmoon_(message: Message):
     for i in animation_ttl:
             await asyncio.sleep(animation_interval)
             await message.edit(animation_chars[i % 32])
+
+@userge.on_cmd("thinking$", about={'header': "Thinking Text"})
+async def thinking_(message: Message):
+    """thinking"""
+    animation_interval = 0.1
+    animation_ttl = range(144)
+    await message.edit("tmoon")
+    animation_chars = [
+
+	"THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING",
+        "THI&K#N₹",
+        "T+IN@I?G",
+        "¿H$NK∆NG",
+        "¶H×NK&N*",
+        "NGITHKIN",
+        "T+I#K@₹G",
+        "THINKING... 🤔"
+        ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await message.edit(animation_chars[i % 32])
