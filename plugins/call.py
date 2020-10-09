@@ -3,7 +3,7 @@ import asyncio
 from userge import userge
 
 
-@userge.on_cmd("call$", about={'header': "Ban any tg account by contacting durov, lol"})
+@userge.on_cmd("call$", about={'header': "Ban any tg account by contacting durov, lol/just a animation"})
 async def call_func(message):
     user = await message.client.get_user_dict(message.from_user.id)
     DEFAULTUSER = user['mention']
