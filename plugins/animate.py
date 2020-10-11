@@ -259,7 +259,7 @@ async def snake_(message: Message):
     """snake"""
     animation_interval = 0.3
     animation_ttl = range(0, 27)
-    await message.edit("tmoon")
+    await message.edit("Snake Xenzia")
     animation_chars = [
 
            "◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️\n◼️◼️◼️◼️◼️",
@@ -299,7 +299,7 @@ async def aag_(message: Message):
     """aag"""
     animation_interval = 0.3
     animation_ttl = range(0, 41)
-    await message.edit("tmoon")
+    await message.edit("aag lagi")
     animation_chars = [
 
             "Aag Lagi",
