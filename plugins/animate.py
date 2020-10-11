@@ -228,7 +228,7 @@ async def thinking_(message: Message):
 async def ok_(message: Message):
     """Ook"""
     animation_interval = 0.01
-    animation_ttl = range(0)
+    animation_ttl = range(18)
     await message.edit("thinking")
     animation_chars = [
 	    "F",
