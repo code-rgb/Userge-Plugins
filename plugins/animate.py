@@ -298,7 +298,7 @@ async def snake_(message: Message):
 async def aag_(message: Message):
     """aag"""
     animation_interval = 0.3
-    animation_ttl = range(0, 40)
+    animation_ttl = range(0, 39)
     await message.edit("Aag Lagi")
     animation_chars = [
 
@@ -309,7 +309,7 @@ async def aag_(message: Message):
             "🌬   💨                                🔥",
             "🌬    💨                               🔥",
             "🌬     💨                              🔥",
-            "🌬      💨                             🔥",    
+            "🌬      💨                             🔥",
             "🌬       💨                            🔥",
             "🌬        💨                           🔥",
             "🌬         💨                          🔥",
@@ -344,5 +344,5 @@ async def aag_(message: Message):
         ]
     for i in animation_ttl:
             await asyncio.sleep(animation_interval)
-            await message.edit(animation_chars[i % 40])
+            await message.edit(animation_chars[i % 39])
 		
