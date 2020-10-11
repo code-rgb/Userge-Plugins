@@ -258,7 +258,7 @@ async def ok_(message: Message):
 async def snake_(message: Message):
     """snake"""
     animation_interval = 0.3
-    animation_ttl = range(0,27)
+    animation_ttl = range(0, 27)
     await message.edit("tmoon")
     animation_chars = [
 
@@ -293,3 +293,56 @@ async def snake_(message: Message):
     for i in animation_ttl:
             await asyncio.sleep(animation_interval)
             await message.edit(animation_chars[i % 27])
+
+@userge.on_cmd("aag$", about={'header': "Aag lagi"})
+async def aag_(message: Message):
+    """aag"""
+    animation_interval = 0.3
+    animation_ttl = range(0, 41)
+    await message.edit("tmoon")
+    animation_chars = [
+
+            "Aag Lagi",
+            "🔥",    
+            "🌬💨                                   🔥",
+            "🌬 💨                                  🔥",
+            "🌬  💨                                 🔥",
+            "🌬   💨                                🔥",
+            "🌬    💨                               🔥",
+            "🌬     💨                              🔥",
+            "🌬      💨                             🔥",    
+            "🌬       💨                            🔥",
+            "🌬        💨                           🔥",
+            "🌬         💨                          🔥",
+            "🌬          💨                         🔥",
+            "🌬           💨                        🔥",
+            "🌬            💨                       🔥",
+            "🌬             💨                      🔥",
+            "🌬              💨                     🔥",
+            "🌬               💨                    🔥",
+            "🌬                💨                   🔥",
+            "🌬                 💨                  🔥",
+            "🌬                  💨                 🔥",
+            "🌬                   💨                🔥",
+            "🌬                    💨               🔥",
+            "🌬                     💨              🔥",
+            "🌬                      💨             🔥",
+            "🌬                       💨            🔥",
+            "🌬                        💨           🔥",
+            "🌬                         💨          🔥",
+            "🌬                          💨         🔥",
+            "🌬                           💨        🔥",
+            "🌬                            💨       🔥",
+            "🌬                             💨      🔥",
+            "🌬                              💨     🔥",
+            "🌬                               💨    🔥",
+            "🌬                                💨   🔥",
+            "🌬                                 💨  🔥",
+            "🌬                                  💨 🔥",
+            "🌬                                   💨🔥",
+            "🌬                                       ",
+            "**Aag Bhuj Gyi** 😁"
+        ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await message.edit(animation_chars[i % 41])
