@@ -34,32 +34,4 @@ async def call_func(message):
         await asyncio.sleep(4)
         await message.edit(animation_chars[i % max_ani])
     await message.edit(called)
-
-    @userge.on_cmd("call$", about={'header': "Ban any tg account by contacting durov, lol/just a animation"})
-async def call_func(message):
-    user = await message.client.get_user_dict(message.from_user.id)
-    animation_chars = [
-            "F",
-            "U",
-            "C",
-            "K",
-            "Y",
-            "O",
-            "U",
-            "B",
-            "C",
-            "FK",
-            "UU",
-            "FCUK",
-            "UOY",
-            "C",
-            "F",
-            "Y",
-            "F",
-            "Ok Sar 😇"
-    ]
-    max_ani = len(animation_chars)
-    for i in range(max_ani):
-        await asyncio.sleep(0.1)
-        await message.edit(animation_chars[i % max_ani])
-    await message.edit(called)
+    
