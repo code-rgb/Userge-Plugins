@@ -346,3 +346,4 @@ async def aag_(message: Message):
     for i in animation_ttl:
             await asyncio.sleep(animation_interval)
             await message.edit(animation_chars[i % 41])
+		
