@@ -223,3 +223,33 @@ async def thinking_(message: Message):
     for i in animation_ttl:
             await asyncio.sleep(animation_interval)
             await message.edit(animation_chars[i % 32])
+		
+@userge.on_cmd("ok$", about={'header': "Okay Sar"})
+async def ok_(message: Message):
+    """Ook"""
+    animation_interval = 0.1
+    animation_ttl = range(0, 90)
+    await message.edit("thinking")
+    animation_chars = [
+	    "F",
+            "U",
+            "C",
+            "K",
+            "Y",
+            "O",
+            "U",
+            "B",
+            "C",
+            "FK",
+            "UU",
+            "FCUK",
+            "UOY",
+            "C",
+            "F",
+            "Y",
+            "F",
+            "Ok Sar 😇"
+        ]
+    for i in animation_ttl:
+            await asyncio.sleep(animation_interval)
+            await message.edit(animation_chars[i % 18])
