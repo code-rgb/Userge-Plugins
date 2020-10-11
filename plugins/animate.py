@@ -226,10 +226,10 @@ async def thinking_(message: Message):
 		
 @userge.on_cmd("ok$", about={'header': "Okay Sar"})
 async def ok_(message: Message):
-    """Ook"""
+    """ok"""
     animation_interval = 0.01
     animation_ttl = range(18)
-    await message.edit("thinking")
+    await message.edit("OKK")
     animation_chars = [
 	    "F",
             "U",
