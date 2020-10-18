@@ -21,7 +21,7 @@ async def make_qr(message: Message):
     if input_:
         text = input_
     elif replied:
-        text = input_ if input_ else replied.text
+        text = input_ or replied.text
     else:
         await message.err("```Input not found...```")
         return

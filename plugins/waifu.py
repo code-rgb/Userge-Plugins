@@ -23,7 +23,7 @@ async def anime_sticker(message: Message):
     if args:
         text = args
     elif replied:
-        text = args if args else replied.text
+        text = args or replied.text
     else:
         await message.err("Input not found!")
         return
@@ -51,7 +51,7 @@ async def anime_sticker(message: Message):
     else:
         k = [20, 32, 33, 40, 41, 42, 58]
         animus = random.choice(k)
-       
+
     try:
         stickers = await userge.get_inline_bot_results(
             "stickerizerbot",

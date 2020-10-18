@@ -50,9 +50,7 @@ async def yts(message: Message):
         _language = data['language']
         _torrents = data['torrents']
         def_quality = "720p"
-        _qualities = []
-        for i in _torrents:
-            _qualities.append(i['quality'])
+        _qualities = [i['quality'] for i in _torrents]
         if qual in _qualities:
             def_quality = qual
         qualsize = [f"{j['quality']}: {j['size']}" for j in _torrents]

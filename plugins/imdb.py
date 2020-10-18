@@ -42,16 +42,12 @@ async def imdb(message: Message):
             stars = 'Not available'
         elif len(credits_) > 2:
             writer = credits_[1].a.text
-            actors = []
-            for x in credits_[2].findAll('a'):
-                actors.append(x.text)
+            actors = [x.text for x in credits_[2].findAll('a')]
             actors.pop()
             stars = actors[0] + ',' + actors[1] + ',' + actors[2]
         else:
             writer = 'Not available'
-            actors = []
-            for x in credits_[1].findAll('a'):
-                actors.append(x.text)
+            actors = [x.text for x in credits_[1].findAll('a')]
             actors.pop()
             stars = actors[0] + ',' + actors[1] + ',' + actors[2]
         if soup.find('div', "inline canwrap"):

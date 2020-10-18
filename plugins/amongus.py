@@ -39,7 +39,7 @@ async def among_us(message: Message):
     if args:
         text = args
     elif reply:
-        text = args if args else reply.text
+        text = args or reply.text
     else:
         await message.err("`Input not found!...`", del_in=5)
         return

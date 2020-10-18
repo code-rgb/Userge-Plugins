@@ -22,12 +22,12 @@ async def honka_says_bot(message: Message):
     if args:
         text = args
     elif replied:
-        text = args if args else replied.text
+        text = args or replied.text
     else:
         await message.err("Input not found!")
         return
     await message.delete()
-    
+
     if '-l' in message.flags:
         font_size = 2
     elif '-m' in message.flags:

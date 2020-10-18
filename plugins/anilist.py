@@ -500,7 +500,7 @@ async def character_search(message: Message):
         out = "<br>"
         out += f'''<img src="{cf['coverImage']['extraLarge']}"/>'''
         out += "<br>"
-        title = cf['title']['english'] if cf['title']['english'] else cf['title']['romaji']
+        title = cf['title']['english'] or cf['title']['romaji']
         out += f"<h3>{title}</h3>"
         out += f"<em>[🇯🇵] {cf['title']['native']}</em><br>"
         out += f'''<a href="{cf['siteUrl']}>{cf['type']}</a><br>'''

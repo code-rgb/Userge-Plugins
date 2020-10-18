@@ -32,9 +32,9 @@ async def anime_Scene(message: Message):
                       "2t", "2ta", "2tb", "2tc", "2td", "2te", "2tf", "2tg", "2th", "2ti"])
 
     sayori_faces = [x for x in "abcdefghijklmnopqrstuvwxy"]
-    
+
     yuri_faces = [x for x in "abcdefghijklmnopqrstuvwx"]
-    
+
     background = ["bedroom", "class", "closet", "club", "corridor", "house", "kitchen", "residential", "sayori_bedroom"]
 
 
@@ -54,13 +54,13 @@ async def anime_Scene(message: Message):
     }
 
     ddlc_char = ["yuri", "natsuki", "monika", "sayori"]
-    
+
     replied = message.reply_to_message
     args = message.filtered_input_str
     if args:
         text = args
     elif replied:
-        text = args if args else replied.text
+        text = args or replied.text
     else:
         await message.err("`Input not found!...`", del_in=5)
         return

@@ -27,7 +27,7 @@ async def gps_locate_(message: Message):
         return await message.err('**404 Location Not Found**', del_in=5)
     address = geoloc.address
     place = address.split(",")
-    name = titlex if titlex else place[0]
+    name = titlex or place[0]
     lon = geoloc.longitude
     lat = geoloc.latitude
     await message.delete()

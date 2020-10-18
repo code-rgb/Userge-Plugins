@@ -11,12 +11,11 @@ async def last_fm_(message: Message):
             "lastfmrobot",
             ""
     )
-    if inline_msg.switch_pm:
-        if inline_msg.switch_pm.start_param == "set":
-            return await message.edit(
-                "**Set Up Last Fm Bot First !**\nGoto @lastfmrobot do /set\n"
-                "then follow the instructions"
-            )
+    if inline_msg.switch_pm and inline_msg.switch_pm.start_param == "set":
+        return await message.edit(
+            "**Set Up Last Fm Bot First !**\nGoto @lastfmrobot do /set\n"
+            "then follow the instructions"
+        )
     await message.delete()
     await userge.send_inline_bot_result(
             chat_id=message.chat.id,
