@@ -1,8 +1,6 @@
 """Spammy Animations ☠️"""
-import re, asyncio
+import asyncio
 from collections import deque
-from asyncio import sleep
-from re import sub
 from userge import userge, Message
 
 

@@ -1,7 +1,6 @@
 """ Creates random anime sticker """
 
 import random
-import re
 from userge import userge, Message
 from userge.utils import deEmojify
 

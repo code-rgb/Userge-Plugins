@@ -5,7 +5,6 @@
 # Improved by code-rgb
 
 import os
-import re
 import requests
 
 from PIL import Image
