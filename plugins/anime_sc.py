@@ -25,15 +25,15 @@ from validators.url import url
 async def anime_Scene(message: Message):
     """ Creates random anime Cut Scene! """
 
-    monika_faces = [x for x in "abcdefghijklmnopqr"]
+    monika_faces = list("abcdefghijklmnopqr")
 
-    natsuki_faces = [x for x in "abcdefghijklmnopqrstuvwxyz"]
+    natsuki_faces = list("abcdefghijklmnopqrstuvwxyz")
     natsuki_faces.extend(["1t", "2bt", "2bta", "2btb", "2btc", "2btd", "2bte", "2btf", "2btg", "2bth", "2bti",
                       "2t", "2ta", "2tb", "2tc", "2td", "2te", "2tf", "2tg", "2th", "2ti"])
 
-    sayori_faces = [x for x in "abcdefghijklmnopqrstuvwxy"]
+    sayori_faces = list("abcdefghijklmnopqrstuvwxy")
 
-    yuri_faces = [x for x in "abcdefghijklmnopqrstuvwx"]
+    yuri_faces = list("abcdefghijklmnopqrstuvwx")
 
     background = ["bedroom", "class", "closet", "club", "corridor", "house", "kitchen", "residential", "sayori_bedroom"]
 
