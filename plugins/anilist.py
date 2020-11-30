@@ -194,12 +194,12 @@ async def return_json_senpai(query, vars_):
 def post_to_tp(a_title, content):
     """ Create a Telegram Post using HTML Content """
     post_client = TelegraphPoster(use_api=True)
-    auth_name = "@PhycoNinja13b"
+    auth_name = "@DeletedUser420"
     post_client.create_api_token(auth_name)
     post_page = post_client.post(
         title=a_title,
         author=auth_name,
-        author_url="https://t.me/PhycoNinja13b",
+        author_url="https://t.me/DeletedUser420",
         text=content,
     )
     return post_page["url"]
