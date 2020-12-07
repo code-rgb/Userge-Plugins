@@ -217,12 +217,7 @@ async def tadmins_(message: Message):
             u_id = members.user.id
             u_name = members.user.username or None
             f_name = (await message.client.get_user_dict(u_id))["fname"]
-            if (
-                status == "administrator"
-                and u_name
-                or status == "creator"
-                and u_name
-            ):
+            if status == "administrator" and u_name or status == "creator" and u_name:
                 text += f"@{u_name} "
             elif status in ["administrator", "creator"]:
                 text += f"[{f_name}](tg://user?id={u_id}) "
