@@ -34,10 +34,7 @@ def mention_html(user_id, name):
 async def join_chat(message: Message):
     """ Join chat """
     replied = message.reply_to_message
-    if replied:
-        text = replied.text
-    else:
-        text = message.input_str
+    text = replied.text if replied else message.input_str
     if not text:
         await message.edit(
             "```Bruh, Without chat name, I can't Join...^_^```", del_in=3
@@ -70,10 +67,7 @@ async def join_chat(message: Message):
 async def leave_chat(message: Message):
     """ Leave chat """
     input_str = message.input_str
-    if input_str:
-        text = input_str
-    else:
-        text = message.chat.id
+    text = input_str or message.chat.id
     try:
         await userge.send_message(text, "```Good bye, Cruel World... :-) ```")
         await userge.leave_chat(text)
@@ -158,10 +152,7 @@ async def tagall_(message: Message):
                 u_id = members.user.id
                 u_name = members.user.username or None
                 f_name = (await message.client.get_user_dict(u_id))["fname"]
-                if u_name:
-                    text += f"@{u_name} "
-                else:
-                    text += f"[{f_name}](tg://user?id={u_id}) "
+                text += f"@{u_name} " if u_name else f"[{f_name}](tg://user?id={u_id}) "
     except Exception as e:
         text += " " + str(e)
     await message.client.send_message(c_id, text, reply_to_message_id=message_id)
@@ -226,16 +217,15 @@ async def tadmins_(message: Message):
             u_id = members.user.id
             u_name = members.user.username or None
             f_name = (await message.client.get_user_dict(u_id))["fname"]
-            if status == "administrator":
-                if u_name:
-                    text += f"@{u_name} "
-                else:
-                    text += f"[{f_name}](tg://user?id={u_id}) "
-            elif status == "creator":
-                if u_name:
-                    text += f"@{u_name} "
-                else:
-                    text += f"[{f_name}](tg://user?id={u_id}) "
+            if (
+                status == "administrator"
+                and u_name
+                or status == "creator"
+                and u_name
+            ):
+                text += f"@{u_name} "
+            elif status in ["administrator", "creator"]:
+                text += f"[{f_name}](tg://user?id={u_id}) "
     except Exception as e:
         text += " " + str(e)
     await message.client.send_message(c_id, text, reply_to_message_id=message_id)

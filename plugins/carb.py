@@ -50,38 +50,6 @@ async def carb(message: Message):
     # Setting Default Theme and Background Colour
     theme = "dracula"
     bg = "rgba(144, 19, 254, 100)"
-    themes = [
-        "3024-night",
-        "a11y-dark",
-        "blackboard",
-        "base16-dark",
-        "base16-light",
-        "cobalt",
-        "dracula",
-        "duotone-dark",
-        "hopscotch",
-        "lucario",
-        "material",
-        "monokai",
-        "night-owl",
-        "nord",
-        "oceanic-next",
-        "one-light",
-        "one-dark",
-        "panda-syntax",
-        "paraiso-dark",
-        "seti",
-        "shades-of-purple",
-        "solarized-dark",
-        "solarized-light",
-        "synthwave-84",
-        "twilight",
-        "verminal",
-        "vscode",
-        "yeti",
-        "zenburn",
-    ]
-
     replied = message.reply_to_message
     if replied:
         text = replied.text
@@ -91,6 +59,38 @@ async def carb(message: Message):
         args = text.split("|")
 
     if len(args) > 0:
+        themes = [
+            "3024-night",
+            "a11y-dark",
+            "blackboard",
+            "base16-dark",
+            "base16-light",
+            "cobalt",
+            "dracula",
+            "duotone-dark",
+            "hopscotch",
+            "lucario",
+            "material",
+            "monokai",
+            "night-owl",
+            "nord",
+            "oceanic-next",
+            "one-light",
+            "one-dark",
+            "panda-syntax",
+            "paraiso-dark",
+            "seti",
+            "shades-of-purple",
+            "solarized-dark",
+            "solarized-light",
+            "synthwave-84",
+            "twilight",
+            "verminal",
+            "vscode",
+            "yeti",
+            "zenburn",
+        ]
+
         for arg in args:
             arg = arg.strip()
             if arg.lower().replace(" ", "-") in themes:

@@ -151,12 +151,10 @@ if hasattr(Config, "LASTFM_API_KEY") and (
             return await message.edit("You Don't have any Loved tracks yet.")
 
         rep = f"<b>Favourite (♥️) Tracks for [{user_}](https://www.last.fm/user/{user_})</b>"
-        count = 1
-        for song_ in tracks:
+        for count, song_ in enumerate(tracks, start=1):
             song_name = song_["name"]
             artist_name = song_["artist"]["name"]
             rep += f"\n{count}. 🎧  <b>[{song_name}]({song_['url']})</b> - [{artist_name}]({song_['artist']['url']})"
-            count += 1
         await message.edit(rep, disable_web_page_preview=True)
 
     @userge.on_cmd(
@@ -184,14 +182,12 @@ if hasattr(Config, "LASTFM_API_KEY") and (
         if len(recent_song) == 0:
             return await message.err("No Recent Tracks found", del_in=5)
         rep = f"<b>[{user_}'s](https://www.last.fm/user/{user_})</b> recently played 🎵 songs:\n"
-        count = 1
-        for song_ in recent_song:
+        for count, song_ in enumerate(recent_song, start=1):
             song_name = song_["name"]
             artist_name = song_["artist"]["name"]
             rep += f"\n{count}. 🎧  <b>[{song_name}]({song_['url']})</b> - [{artist_name}]({song_['artist']['url']})"
             if song_["loved"] != "0":
                 rep += " (♥️)"
-            count += 1
         await message.edit(rep, disable_web_page_preview=True)
 
     async def get_response(params: dict):

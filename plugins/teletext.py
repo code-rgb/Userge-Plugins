@@ -24,11 +24,11 @@ async def tele_text(message: Message):
     if not replied:
         await message.err("Reply To Message First !", del_in=5)
         return
-    if not (replied.text or replied.caption):
+    if not replied.text and not replied.caption:
         await message.err("Replied Message Doesn't Contain Text. 🤨", del_in=5)
         return
     await message.edit("Pasting...")
-    text = replied.text if replied.text else replied.caption
+    text = replied.text or replied.caption
     if "-mono" in message.flags:
         text = "<code>{}</code>".format(text)
     else:

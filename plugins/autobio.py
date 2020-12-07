@@ -54,11 +54,7 @@ async def auto_bio(msg: Message):
         )
         return
 
-    if "hi" in msg.input_str.lower():
-        BIO_QUOTES = HINDI_QUOTES
-    else:
-        BIO_QUOTES = ENGLISH_QUOTES
-
+    BIO_QUOTES = HINDI_QUOTES if "hi" in msg.input_str.lower() else ENGLISH_QUOTES
     USER_DATA.update_one({"_id": "BIO_UPDATION"}, {"$set": {"on": True}}, upsert=True)
     await msg.edit(
         "Auto Bio Updation is **Started** Successfully...", log=__name__, del_in=3
@@ -101,8 +97,6 @@ async def view_bio_timeout(message: Message):
 async def _autobio_worker():
     while BIO_UPDATION:
         for quote in BIO_QUOTES:
-            if not BIO_UPDATION:
-                break
             try:
                 await userge.update_profile(bio=quote)
             except FloodWait as s_c:

@@ -42,10 +42,7 @@ async def info(msg: Message):
         return
     await msg.edit("`Getting Info...`")
     l_name = user.last_name or ""
-    if user.username:
-        username = "@" + user.username
-    else:
-        username = "`None`"
+    username = "@" + user.username if user.username else "`None`"
     common_chats = await msg.client.get_common_chats(user.id)
     user_info = f"""
 **About [{user.first_name} {l_name}](tg://user?id={user.id})**:
