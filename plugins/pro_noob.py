@@ -10,7 +10,7 @@ from userge import userge, Message
 
 @userge.on_cmd("unoob$", about={'header': "You Noob"})
 async def unoob_(message: Message):
-    """unoob"""
+    """you noob"""
     animation_interval = 1
     animation_ttl = range(9)
     await message.edit("unoob")
@@ -32,7 +32,7 @@ async def unoob_(message: Message):
 
 @userge.on_cmd("menoob$", about={'header': "I'm Noob"})
 async def menoob_(message: Message):
-    """menoob"""
+    """me noob"""
     animation_interval = 1
     animation_ttl = range(9)
     await message.edit("menoob")
@@ -54,19 +54,20 @@ async def menoob_(message: Message):
             
 @userge.on_cmd("upro$", about={'header': "You Pro"})
 async def upro_(message: Message):
-    """upro"""
+    """you're pro"""
     animation_interval = 1
     animation_ttl = range(9)
     await message.edit("upro")
     animation_chars = [
         "EvErYbOdY",
         "iZ",
+        "BiGGeSt",
         "PeRu",
         "uNtiL",
         "YoU",
         "aRriVe",
         "😈",
-        "EvErYbOdY iZ PeRu uNtiL YoU aRriVe 😈",
+        "EvErYbOdY iZ BiGGeSt PeRu uNtiL YoU aRriVe 😈",
     ]
     for i in animation_ttl:
             await asyncio.sleep(animation_interval)
@@ -75,19 +76,20 @@ async def upro_(message: Message):
             
 @userge.on_cmd("mepro$", about={'header': "I'm Pro"})
 async def upro_(message: Message):
-    """mepro"""
+    """i'm pro"""
     animation_interval = 1
     animation_ttl = range(9)
     await message.edit("mepro")
     animation_chars = [
         "EvErYbOdY",
         "iZ",
+        "BiGGeSt",
         "PeRu",
         "uNtiL",
         "i",
         "aRriVe",
         "😈",
-        "EvErYbOdY iZ PeRu uNtiL i aRriVe 😈",
+        "EvErYbOdY iZ BiGGeSt PeRu uNtiL i aRriVe 😈",
     ]
     for i in animation_ttl:
             await asyncio.sleep(animation_interval)
