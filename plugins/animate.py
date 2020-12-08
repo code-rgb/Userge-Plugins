@@ -178,7 +178,7 @@ async def tmoon_(message: Message):
 @userge.on_cmd("thinking$", about={'header': "Thinking Text"})
 async def thinking_(message: Message):
     """thinking"""
-    animation_interval = 0.1
+    animation_interval = 0.01
     animation_ttl = range(72)
     await message.edit("thinking")
     animation_chars = [
