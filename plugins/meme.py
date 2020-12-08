@@ -59,7 +59,7 @@ async def meme_(message: Message):
         meme_file = file_3
     if meme_file is None:
         meme_file = dls_loc
-    chat = "@MemeAutobot"
+    chat = "@MemeAuto_Bot"
     async with userge.conversation(chat) as conv:
         try:
             args = message.input_str
@@ -67,13 +67,13 @@ async def meme_(message: Message):
             await conv.get_response(mark_read=True)
         except YouBlockedUser:
             await message.err(
-                "```This cmd not for you, If you want to use, Unblock``` **@MemeAutobot**",
+                "```This cmd not for you, If you want to use, Unblock``` **@MemeAuto_Bot**",
                 del_in=5)
             return
         await conv.send_message(args)
         response = await conv.get_response(mark_read=True)
         if "Okay..." in response.text:
-            await message.edit("```Sending gay media to gay...```")
+            await message.edit("`Sending gay media to gay...`")
         await userge.send_photo(chat, meme_file)
         response = await conv.get_response(mark_read=True)
         if not response.photo:
