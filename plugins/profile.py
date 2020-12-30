@@ -182,8 +182,7 @@ async def set_profile_picture(message: Message):
             "-lname": "Print only last name",
             "-flname": "Print full name",
             "-bio": "Print bio",
-            "-uname": "Print username",
-            "-pp": "Upload profile picture",
+            "-uname": "Print username",       
         },
         "usage": "{tr}vpf [flags]\n{tr}vpf [flags] [reply to any user]",
         "note": "<b> -> Use 'me' after flags to print own profile</b>\n"
@@ -246,16 +245,7 @@ async def view_profile(message: Message):
             await message.edit("```checking, wait plox !...```", del_in=3)
             username = user.username
             await message.edit("<code>{}</code>".format(username), parse_mode="html")
-    elif "-pp" in message.flags:
-        if not user.photo:
-            await message.err("profile photo not found!...")
-        else:
-            await message.edit("```checking pfp, wait plox !...```", del_in=3)
-            await message.client.download_media(user.photo.big_file_id, file_name=PHOTO)
-            await message.client.send_photo(message.chat.id, PHOTO)
-            if os.path.exists(PHOTO):
-                os.remove(PHOTO)
-
+    
 
 @userge.on_cmd(
     "delpfp",
@@ -391,7 +381,32 @@ async def clone_(message: Message):
         await userge.set_profile_photo(photo=PHOTO)
         await message.edit("```Profile is Successfully Cloned ...```", del_in=3)
 
-
+        
+# photo grabber 
+@userge.on_cmd(
+    "poto",
+    about={
+        "header": "upload the photo of replied person or chat",
+        "usage": "upload the photo of replied person or chat",
+        "examples": ".poto",
+    },
+    allow_channels=False,
+)
+async def photograb(message: Message):
+    if message.reply_to_message and message.reply_to_message.from_users.photo:
+        getid = message.reply_to_message.from_user.photo.big_file_id
+        getphoto = await userge.download_media(getid)
+        await userge.send_photo(message.chat.id,photo=getphoto)
+        os.remove(getphoto)
+    elif message.chat.photo and not message.reply_to_message:
+        phid = message.chat.photo.big_file_id
+        ppo = await userge.download_media(phid)
+        await userge.send_photo(message.chat.id,photo=ppo
+        os.remove(ppo)
+    else:
+        await message.edit_text("Didnt Found Anything !")       
+                                
+                                
 @userge.on_cmd(
     "revert",
     about={"header": "Returns original profile", "usage": "{tr}revert"},
