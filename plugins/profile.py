@@ -395,16 +395,16 @@ async def clone_(message: Message):
 async def photograb(message: Message):
     if message.reply_to_message and message.reply_to_message.from_users.photo:
         getid = message.reply_to_message.from_user.photo.big_file_id
-        getphoto = await userge.download_media(getid)
-        await userge.send_photo(message.chat.id,photo=getphoto)
+        getphoto = await message.client.download_media(getid)
+        await message.client.send_photo(message.chat.id,photo=getphoto)
         os.remove(getphoto)
     elif message.chat.photo and not message.reply_to_message:
         phid = message.chat.photo.big_file_id
-        ppo = await userge.download_media(phid)
-        await userge.send_photo(message.chat.id,photo=ppo
+        ppo = await message.client.download_media(phid)
+        await message.client.send_photo(message.chat.id,photo=ppo)
         os.remove(ppo)
     else:
-        await message.edit_text("Didnt Found Anything !")       
+        await message.err("Didnt Found Anything !")       
                                 
                                 
 @userge.on_cmd(
