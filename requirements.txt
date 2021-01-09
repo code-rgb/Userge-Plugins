@@ -12,7 +12,7 @@ justwatch
 lottie
 qrcode
 spotdl
-git+https://github.com/code-rgb/tracemoepy
+tracemoepy
 validators
 geopy
 prettytable

@@ -13,10 +13,9 @@ from datetime import datetime
 import flag as cflag
 import humanize
 import tracemoepy
-from aiohttp import ClientSession
 from userge import Config, Message, get_collection, userge
 from userge.utils import post_to_telegraph as post_to_tp
-from userge.utils import progress, take_screen_shot
+from userge.utils import progress, take_screen_shot, xbot, media_to_image
 
 # Logging Errors
 CLOG = userge.getCLogger(__name__)
@@ -185,10 +184,9 @@ async def _init():
 async def return_json_senpai(query, vars_):
     """ Makes a Post to https://graphql.anilist.co. """
     url_ = "https://graphql.anilist.co"
-    async with ClientSession() as api_:
-        post_con = await api_.post(url_, json={"query": query, "variables": vars_})
+    async with xbot.session.post(url_, json={"query": query, "variables": vars_}) as post_con:
         json_data = await post_con.json()
-        return json_data
+    return json_data
 
 
 def make_it_rw(time_stamp, as_countdown=False):
@@ -525,33 +523,9 @@ async def character_search(message: Message):
 )
 async def trace_bek(message: Message):
     """ Reverse Search Anime Clips/Photos """
-    replied = message.reply_to_message
-    if not replied:
-        await message.edit("Ara Ara... Reply to a Media Senpai")
-        return
-    if not (replied.photo or replied.video or replied.animation):
-        await message.err("Nani, reply to gif/photo/video")
-        return
-    if not os.path.isdir(Config.DOWN_PATH):
-        os.makedirs(Config.DOWN_PATH)
-    await message.edit("He he, let me use my skills")
-    dls = await message.client.download_media(
-        message=message.reply_to_message,
-        file_name=Config.DOWN_PATH,
-        progress=progress,
-        progress_args=(message, "Downloading Media"),
-    )
-    dls_loc = os.path.join(Config.DOWN_PATH, os.path.basename(dls))
-    if replied.animation or replied.video:
-        img_loc = os.path.join(Config.DOWN_PATH, "trace.png")
-        await take_screen_shot(dls_loc, 0, img_loc)
-        if not os.path.lexists(img_loc):
-            await message.err("Media not found...", del_in=5)
-            return
-        os.remove(dls_loc)
-        dls_loc = img_loc
+    dls_loc = await media_to_image(message)
     if dls_loc:
-        tracemoe = tracemoepy.async_trace.Async_Trace()
+        tracemoe = tracemoepy.AsyncTrace(session=xbot.session)
         search = await tracemoe.search(dls_loc, upload_file=True)
         os.remove(dls_loc)
         result = search["docs"][0]
