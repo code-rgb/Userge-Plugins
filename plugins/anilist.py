@@ -13,9 +13,10 @@ from datetime import datetime
 import flag as cflag
 import humanize
 import tracemoepy
-from userge import Config, Message, get_collection, userge
+from userge import Message, get_collection, userge
+from userge.utils import media_to_image
 from userge.utils import post_to_telegraph as post_to_tp
-from userge.utils import progress, take_screen_shot, xbot, media_to_image
+from userge.utils import xbot
 
 # Logging Errors
 CLOG = userge.getCLogger(__name__)
@@ -184,7 +185,9 @@ async def _init():
 async def return_json_senpai(query, vars_):
     """ Makes a Post to https://graphql.anilist.co. """
     url_ = "https://graphql.anilist.co"
-    async with xbot.session.post(url_, json={"query": query, "variables": vars_}) as post_con:
+    async with xbot.session.post(
+        url_, json={"query": query, "variables": vars_}
+    ) as post_con:
         json_data = await post_con.json()
     return json_data
 
