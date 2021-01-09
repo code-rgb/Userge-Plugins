@@ -9,12 +9,13 @@ import asyncio
 import os
 import random
 from time import time
-from userge.utils import get_file_id
+
 from coffeehouse.api import API
 from coffeehouse.exception import CoffeeHouseError
 from coffeehouse.lydia import LydiaAI, Session
 from pyrogram.errors import PeerIdInvalid
 from userge import Message, filters, get_collection, pool, userge
+from userge.utils import get_file_id
 
 LOGGER = userge.getCLogger(__name__)
 LYDIA_CHATS = get_collection("LYDIA_CHATS")
