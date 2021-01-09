@@ -12,7 +12,7 @@ justwatch
 lottie
 qrcode
 spotdl
-tracemoepy
+tracemoepy==3.8
 validators
 geopy
 prettytable
