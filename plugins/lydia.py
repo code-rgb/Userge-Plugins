@@ -9,11 +9,11 @@ import asyncio
 import os
 import random
 from time import time
-
+from userge.utils import get_file_id
 from coffeehouse.api import API
 from coffeehouse.exception import CoffeeHouseError
 from coffeehouse.lydia import LydiaAI, Session
-from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid
+from pyrogram.errors import PeerIdInvalid
 from userge import Message, filters, get_collection, pool, userge
 
 LOGGER = userge.getCLogger(__name__)
@@ -155,7 +155,7 @@ async def lydia_session(message: Message):
                 u_info = await userge.get_user_dict(user_id)
                 u_men = u_info["mention"]
                 msg += f"{u_men}\n"
-            except PeerIdInvalid:
+            except (PeerIdInvalid, IndexError):
                 msg += f"[user](tg://user?id={user_id}) - `{user_id}`\n"
         await message.edit_or_send_as_file(msg)
     elif "-info" in message.flags:
@@ -237,13 +237,12 @@ async def _custom_media_reply(message: Message):
         await _custom_media_reply(message)
         return
     if cus_msg.media:
-        file_id, file_ref = get_file_id_and_ref(cus_msg)
+        file_id = get_file_id(cus_msg)
         try:
             if cus_msg.animation:
                 await message.client.send_animation(
                     chat_id=message.chat.id,
                     animation=file_id,
-                    file_ref=file_ref,
                     unsave=True,
                     reply_to_message_id=message.message_id,
                 )
@@ -264,7 +263,7 @@ async def _custom_media_reply(message: Message):
                 if action:
                     await message.reply_chat_action(action)
                 await asyncio.sleep(5)
-                await message.reply_cached_media(file_id=file_id, file_ref=file_ref)
+                await message.reply_cached_media(file_id=file_id)
         except Exception as idk:  # pylint: disable=W0703
             LOGGER.log(f"#ERROR: `{idk}`")
             await _custom_media_reply(message)
