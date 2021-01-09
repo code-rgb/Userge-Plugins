@@ -72,8 +72,7 @@ async def anime_sticker(message: Message):
         message_id = replied.message_id if replied else None
         await userge.send_sticker(
             chat_id=message.chat.id,
-            sticker=str(saved.sticker.file_id),
-            file_ref=str(saved.sticker.file_ref),
+            sticker=saved.sticker.file_id,
             reply_to_message_id=message_id,
         )
         await saved.delete()

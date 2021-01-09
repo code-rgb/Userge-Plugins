@@ -15,7 +15,7 @@ from coffeehouse.exception import CoffeeHouseError
 from coffeehouse.lydia import LydiaAI, Session
 from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid
 from userge import Message, filters, get_collection, pool, userge
-from userge.utils import get_file_id_and_ref
+from userge.utils import get_file_id
 
 LOGGER = userge.getCLogger(__name__)
 LYDIA_CHATS = get_collection("LYDIA_CHATS")
