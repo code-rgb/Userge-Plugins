@@ -3,7 +3,7 @@ coffeehouse
 colour
 deezloader
 emoji-country-flag
-Google-Images-Search==1.3.0
+Google-Images-Search==1.3.4
 google
 glitch-this
 gtts
