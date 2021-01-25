@@ -117,7 +117,7 @@ async def invite_link(message: Message):
 @userge.on_cmd("tagall", about={
     'header': "Tagall recent 100 members with caption",
     'usage': "{tr}tagall [Text | reply to text Msg]"},
-    allow_via_bot=False, allow_private=False, only_admins=False)
+    allow_via_bot=True, allow_private=False, only_admins=False)
 async def tagall_(message: Message):
     """ Tag recent members """
     replied = message.reply_to_message
@@ -151,7 +151,7 @@ async def tagall_(message: Message):
 @userge.on_cmd("stagall", about={
     'header': "Silent tag recent 100 members with caption",
     'usage': "{tr}stagall [Text | reply to text Msg]"},
-    allow_private=False, allow_via_bot=False, only_admins=False)
+    allow_private=False, allow_via_bot=True, only_admins=False)
 async def stagall_(message: Message):
     """ tag recent members without spam """
     chat_id = message.chat.id
@@ -227,7 +227,7 @@ async def tadmins_(message: Message):
         '-ddes': "delete chat description"},
     'usage': "{tr}schat [flag]\n"
              "{tr}schat [flags] [input]"},
-    allow_via_bot=False, allow_private=False, only_admins=True)
+    allow_via_bot=True, allow_private=False, only_admins=False)
 async def set_chat(message: Message):
     """ Set or delete chat info """
     if not message.flags:
