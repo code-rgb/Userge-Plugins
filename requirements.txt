@@ -11,7 +11,7 @@ justwatch
 lottie
 qrcode
 git+https://github.com/Phyco-Ninja/spotify-downloader
-tracemoepy==3.8
+tracemoepy==4.1
 validators
 geopy
 prettytable
