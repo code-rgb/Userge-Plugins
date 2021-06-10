@@ -22,16 +22,16 @@ from userge.utils import post_to_telegraph as post_to_tp
 CLOG = userge.getCLogger(__name__)
 
 # Default templates for Query Formatting
-ANIME_TEMPLATE = """[{c_flag}]**{romaji}**
+ANIME_TEMPLATE = """{name}
 
 **ID | MAL ID:** `{idm}` | `{idmal}`
 ➤ **SOURCE:** `{source}`
-➤ **TYPE:** `{formats}`
-➤ **GENRES:** `{genre}`
+➤ **TYPE:** `{formats}`{genrels}
 ➤ **SEASON:** `{season}`
+➤ **RELEASE YEAR:** `{yr}`
 ➤ **EPISODES:** `{episodes}`
-➤ **STATUS:** `{status}`
-➤ **NEXT AIRING:** `{air_on}`
+➤ **DURATION:** `{duration} min/ep`{chrctrsls}
+{status_air}
 ➤ **SCORE:** `{score}%` 🌟
 ➤ **ADULT RATED:** `{adult}`
 🎬 {trailer_link}
@@ -42,66 +42,63 @@ SAVED = get_collection("TEMPLATES")
 # GraphQL Queries.
 ANIME_QUERY = """
 query ($id: Int, $idMal:Int, $search: String, $type: MediaType, $asHtml: Boolean) {
-  Media (id: $id, idMal: $idMal, search: $search, type: $type) {
-    id
-    idMal
-    title {
-      romaji
-      english
-      native
-    }
-    format
-    status
-    description (asHtml: $asHtml)
-    startDate {
-      year
-      month
-      day
-    }
-    season
-    episodes
-    duration
-    countryOfOrigin
-    source (version: 2)
-    trailer {
-      id
-      site
-      thumbnail
-    }
-    coverImage {
-      extraLarge
-    }
-    bannerImage
-    genres
-    averageScore
-    nextAiringEpisode {
-      airingAt
-      timeUntilAiring
-      episode
-    }
-    isAdult
-    characters (role: MAIN, page: 1, perPage: 10) {
-      nodes {
+    Media (id: $id, idMal: $idMal, search: $search, type: $type) {
         id
-        name {
-          full
-          native
+        idMal
+        title {
+            romaji
+            english
+            native
         }
-        image {
-          large
-        }
+        format
+        status
         description (asHtml: $asHtml)
+        startDate {
+            year
+            month
+            day
+        }
+        season
+        episodes
+        duration
+        countryOfOrigin
+        source (version: 2)
+        trailer {
+          id
+          site
+          thumbnail
+        }
+        bannerImage
+        genres
+        averageScore
+        nextAiringEpisode {
+            airingAt
+            timeUntilAiring
+            episode
+        }
+        isAdult
+        characters (role: MAIN, page: 1, perPage: 10) {
+            nodes {
+                id
+                name {
+                    full
+                    native
+                }
+                image {
+                    large
+                }
+                description (asHtml: $asHtml)
+                siteUrl
+            }
+        }
+        studios (isMain: true) {
+            nodes {
+                name
+                siteUrl
+            }
+        }
         siteUrl
-      }
     }
-    studios (isMain: true) {
-      nodes {
-        name
-        siteUrl
-      }
-    }
-    siteUrl
-  }
 }
 """
 
@@ -171,6 +168,29 @@ query ($search: String, $asHtml: Boolean) {
       }
     }
   }
+}
+"""
+
+MANGA_QUERY = """
+query ($search: String, $type: MediaType) {
+    Media (search: $search, type: $type) {
+        id
+        title {
+            romaji
+            english
+            native
+        }
+        format
+        countryOfOrigin
+        source (version: 2)
+        status
+        description(asHtml: true)
+        chapters
+        volumes
+        genres
+        averageScore
+        siteUrl
+    }
 }
 """
 
@@ -253,19 +273,41 @@ async def anim_arch(message: Message):
     duration = data.get("duration")
     country = data.get("countryOfOrigin")
     c_flag = cflag.flag(country)
+    if data["title"]["english"] is not None:
+        name = f'''[{c_flag}]**{romaji}**
+        __{english}__
+        {native}'''
+    else:
+        name = f'''[{c_flag}]**{romaji}**
+        {native}'''
     source = data.get("source")
-    coverImg = data.get("coverImage")["extraLarge"]
     bannerImg = data.get("bannerImage")
     genres = data.get("genres")
-    genre = genres[0]
-    if len(genres) != 1:
-        genre = ", ".join(genres)
+    charlist = []
+    for char in data["characters"]["nodes"]:
+        charlist.append(f"    •{char['name']['full']}")
+    chrctrs = "\n"
+    chrctrs += ("\n").join(charlist[:10])
+    chrctrsls = f"\n➤ **CHARACTERS:** `{chrctrs}`" if len(charlist)!=0 else ""
+    if genres!=[]:
+        genre = genres[0]
+        if len(genres) != 1:
+            genre = ", ".join(genres)
+        genrels = f"\n➤ **GENRES:** `{genre}`"
+    else:
+        genrels = ""
     score = data.get("averageScore")
     air_on = None
     if data["nextAiringEpisode"]:
         nextAir = data["nextAiringEpisode"]["airingAt"]
         air_on = make_it_rw(nextAir)
+        air_on += f" | {data['nextAiringEpisode']['episode']}th eps"
+    if status=="FINISHED":
+        status_air = f"➤ **STATUS:** `{status}`"
+    else:
+        status_air = f"➤ **STATUS:** `{status}`\n➤ **NEXT AIRING:** `{air_on}`"
     s_date = data.get("startDate")
+    yr = s_date["year"]
     adult = data.get("isAdult")
     trailer_link = "N/A"
 
@@ -286,12 +328,14 @@ async def anim_arch(message: Message):
         )
         html_char += f"{html_}<br><br>"
 
-    studios = ""
-    for studio in data["studios"]["nodes"]:
-        studios += "<a href='{}'>• {}</a> ".format(studio["siteUrl"], studio["name"])
+    studios = "".join(
+        "<a href='{}'>• {}</a> ".format(studio["siteUrl"], studio["name"])
+        for studio in data["studios"]["nodes"]
+    )
+
     url = data.get("siteUrl")
 
-    title_img = coverImg or bannerImg
+    title_img = f"https://img.anili.st/media/{idm}"
     # Telegraph Post mejik
     html_pc = ""
     html_pc += f"<img src='{title_img}' title={romaji}/>"
@@ -322,7 +366,82 @@ async def anim_arch(message: Message):
         finals_ = f"[\u200b]({title_img}) {finals_}"
         await message.edit(finals_)
         return
-    await message.reply_photo(title_img, caption=finals_)
+    if len(finals_) <= 1023:
+        await message.reply_photo(title_img, caption=finals_)
+    else:
+        await message.reply(finals_)
+    await message.delete()
+
+
+@userge.on_cmd(
+    "manga",
+    about={
+        "header": "Manga Search",
+        "description": "Search for Manga using AniList API",
+        "usage": "{tr}manga [manga name]",
+        "examples": "{tr}manga Ao Haru Ride",
+    },
+)
+async def manga_arch(message: Message):
+    """ Search Manga Info """
+    query = message.input_str
+    if not query:
+        await message.err("NameError: 'query' not defined")
+        return
+    vars_ = {"search": query, "asHtml": True, "type": "MANGA"}
+    result = await return_json_senpai(MANGA_QUERY, vars_)
+    error = result.get("errors")
+    if error:
+        await CLOG.log(f"**ANILIST RETURNED FOLLOWING ERROR:**\n\n`{error}`")
+        error_sts = error[0].get("message")
+        await message.err(f"[{error_sts}]")
+        return
+
+    data = result["data"]["Media"]
+
+    # Data of all fields in returned json
+    # pylint: disable=possibly-unused-variable
+    idm = data.get("id")
+    romaji = data["title"]["romaji"]
+    english = data["title"]["english"]
+    native = data["title"]["native"]
+    status = data.get("status")
+    synopsis = data.get("description")
+    description = synopsis[:720]
+    if len(synopsis) > 720:
+      description += "..."
+    volumes = data.get("volumes")
+    chapters = data.get("chapters")
+    genres = data.get("genres")
+    genre = genres[0]
+    if len(genres) != 1:
+        genre = ", ".join(genres)
+    score = data.get("averageScore")
+    url = data.get("siteUrl")
+    format_ = data.get("format")
+    country = data.get("countryOfOrigin")
+    source = data.get("source")
+    c_flag = cflag.flag(country)
+
+    name = f"""[{c_flag}]**{romaji}**
+        __{english}__
+        {native}"""
+    if english==None:
+        name = f"""[{c_flag}]**{romaji}**
+        {native}"""
+    finals_ = f"{name}\n\n"
+    finals_ += f"➤ **ID:** `{idm}`\n"
+    finals_ += f"➤ **STATUS:** `{status}`\n"
+    finals_ += f"➤ **VOLUMES:** `{volumes}`\n"
+    finals_ += f"➤ **CHAPTERS:** `{chapters}`\n"
+    finals_ += f"➤ **SCORE:** `{score}`\n"
+    finals_ += f"➤ **GENRES:** `{genre}`\n"
+    finals_ += f"➤ **FORMAT:** `{format_}`\n"
+    finals_ += f"➤ **SOURCE:** `{source}`\n\n"
+    finals_ += f"Description: `{description}`\n\n"
+    finals_ += f"For more info <a href='{url}'>click here</a>"
+    pic = f"https://img.anili.st/media/{idm}"
+    await message.reply_photo(pic, caption=finals_)
     await message.delete()
 
 
@@ -475,7 +594,23 @@ async def character_search(message: Message):
     site_url = data["siteUrl"]
     description = data["description"]
     featured = data["media"]["nodes"]
-
+    snin = "\n"
+    sninal = ""
+    sninml = ""
+    for ani in featured:
+        k = ani["title"]["english"] or ani["title"]["romaji"]
+        kk = ani["type"]
+        if kk=="MANGA":
+            sninml += f"    • {k}\n"
+    for ani in featured:
+        kkk = ani["title"]["english"] or ani["title"]["romaji"]
+        kkkk = ani["type"]
+        if kkkk=="ANIME":
+            sninal += f"    • {kkk}\n"
+    sninal += "\n"
+    sninm = "  `MANGAS`\n" if len(sninml)!=0 else ""
+    snina = "  `ANIMES`\n" if len(sninal)!=0 else ""
+    snin = f"\n{snina}{sninal}{sninm}{sninml}"
     sp = 0
     cntnt = ""
     for cf in featured:
@@ -508,11 +643,16 @@ async def character_search(message: Message):
     cap_text = f"""[🇯🇵] __{native}__
     (`{name}`)
 **ID:** {id_}
-[About Character]({url_})
 
+**Featured in:** __{snin}__
+
+[About Character]({url_})
 [Visit Website]({site_url})"""
 
-    await message.reply_photo(img, caption=cap_text)
+    if len(cap_text) <= 1023:
+        await message.reply_photo(img, caption=cap_text)
+    else:
+        await message.reply(cap_text)
     await message.delete()
 
 
